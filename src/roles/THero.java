@@ -10,4 +10,10 @@ public class THero implements TInhabitant {
 		
 	}
 
+	@Override
+	public String getImg() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

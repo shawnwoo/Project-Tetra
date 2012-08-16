@@ -4,6 +4,7 @@ public abstract class Location {
 	
 	private LocationState state;
 	private LocationState preState;
+	
 
 	/**
 	 * @return the state
@@ -28,5 +29,9 @@ public abstract class Location {
 	public String showState(){
 		return this.state.showState();
 	}
+	
+	public abstract String getImg();
+	
+	
 
 }

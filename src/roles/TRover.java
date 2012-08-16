@@ -34,4 +34,10 @@ public class TRover implements TInhabitant {
 		this.currentLoc = currntloc;
 	}
 
+	@Override
+	public String getImg() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
