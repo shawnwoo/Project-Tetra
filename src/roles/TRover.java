@@ -1,7 +1,9 @@
 package roles;
 
 import starMap.StarMapInterface;
+import surface.EmptyState;
 import surface.Location;
+import surface.TRoverState;
 
 public class TRover implements TInhabitant {
 
@@ -27,8 +29,12 @@ public class TRover implements TInhabitant {
 	 */
 	public void moveTo(Location targetLoc) {
 		if (currentLoc.isAdjacent(targetLoc)
-				&& (!targetLoc.getState().showState().equalsIgnoreCase("river")))
+				&& targetLoc.getState().showState().equalsIgnoreCase("empty")) {
+			this.currentLoc.setState(new EmptyState());
 			this.setCurrntloc(targetLoc);
+			this.currentLoc.setState(new TRoverState());
+		}
+
 		else
 			System.out.println("Can move to adjacent location");
 
@@ -85,11 +91,10 @@ public class TRover implements TInhabitant {
 		// TODO Auto-generated method stub
 		return this.currentLoc;
 	}
-	
-	void setLocation(Location targetLoc){
-		this.currentLoc=targetLoc;
+
+	void setLocation(Location targetLoc) {
+		this.currentLoc = targetLoc;
 	}
-	
 
 	@Override
 	public String getId() {
