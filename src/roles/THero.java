@@ -15,7 +15,7 @@ public class THero implements TInhabitant {
 
 	@Override
 	public void moveTo(Location targetLoc) {
-		// TODO Auto-generated method stub
+		rover.moveTo(targetLoc);
 
 	}
 
@@ -73,4 +73,7 @@ public class THero implements TInhabitant {
 		return rover.getId();
 	}
 
+	public void flyTo(Location targetLoc){
+		((TRover)rover).setLocation(targetLoc);
+	}
 }

@@ -8,27 +8,29 @@ public class TRover implements TInhabitant {
 	private Location currentLoc;
 	private String gender;
 	private StarMapInterface starMap;
-	private String ID="0";
-	
-	public TRover(String gender){
-		this.gender=gender;
+	private String ID = "0";
+
+	public TRover(String gender) {
+		this.gender = gender;
 	};
-	
-	public TRover(String gender, Location loc){
-		this.gender=gender;
-		this.currentLoc=loc;
+
+	public TRover(String gender, Location loc) {
+		this.gender = gender;
+		this.currentLoc = loc;
 	}
-	
 
 	/**
-	 * move to target location, if the target location is an adjacent location, log a message
+	 * move to target location, if the target location is not an adjacent
+	 * location, log a message
+	 * 
 	 * @param targetLoc
 	 */
 	public void moveTo(Location targetLoc) {
-		if (!currentLoc.isAdjacent(targetLoc))
+		if (currentLoc.isAdjacent(targetLoc)
+				&& (!targetLoc.getState().showState().equalsIgnoreCase("river")))
 			this.setCurrntloc(targetLoc);
 		else
-			System.out.println("Cannot move to that adjacent location");
+			System.out.println("Can move to adjacent location");
 
 	}
 
@@ -62,7 +64,7 @@ public class TRover implements TInhabitant {
 	@Override
 	public void setStarMap(StarMapInterface starMap) {
 		// TODO Auto-generated method stub
-		this.starMap=starMap;
+		this.starMap = starMap;
 	}
 
 	@Override
@@ -74,8 +76,8 @@ public class TRover implements TInhabitant {
 	@Override
 	public void setInitLocation(Location loc) {
 		// TODO Auto-generated method stub
-		this.currentLoc=loc;
-		
+		this.currentLoc = loc;
+
 	}
 
 	@Override
@@ -83,15 +85,20 @@ public class TRover implements TInhabitant {
 		// TODO Auto-generated method stub
 		return this.currentLoc;
 	}
+	
+	void setLocation(Location targetLoc){
+		this.currentLoc=targetLoc;
+	}
+	
 
 	@Override
 	public String getId() {
 		// TODO Auto-generated method stub
 		return ID;
 	}
-	
-	public void setId(String id){
-		this.ID=id;
+
+	public void setId(String id) {
+		this.ID = id;
 	}
 
 }
