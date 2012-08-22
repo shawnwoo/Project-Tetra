@@ -10,6 +10,7 @@ public class TVader implements TInhabitant {
 
 	private TInhabitant rover;
 	private ArrayList<Location> trace;
+	
 
 	public TVader(TInhabitant rover) {
 		this.rover = rover;
@@ -71,7 +72,7 @@ public class TVader implements TInhabitant {
 	}
 
 	public void flyTo(Location targetLoc) {
-		((TRover) rover).setLocation(targetLoc);
+		rover.setCurrentLocation(targetLoc);
 
 	}
 
@@ -91,6 +92,12 @@ public class TVader implements TInhabitant {
 		}
 
 		trace.clear();
+	}
+
+	@Override
+	public void setCurrentLocation(Location loc) {
+		// TODO Auto-generated method stub
+		rover.setCurrentLocation(loc);
 	}
 
 }

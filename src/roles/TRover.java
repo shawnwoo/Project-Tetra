@@ -3,6 +3,7 @@ package roles;
 import starMap.StarMapInterface;
 import surface.EmptyState;
 import surface.Location;
+import surface.LocationStateFactory;
 import surface.TRoverState;
 
 public class TRover implements TInhabitant {
@@ -28,11 +29,17 @@ public class TRover implements TInhabitant {
 	 * @param targetLoc
 	 */
 	public void moveTo(Location targetLoc) {
-		if (currentLoc.isAdjacent(targetLoc)
-				&& targetLoc.getState().showState().equalsIgnoreCase("empty")) {
-			this.currentLoc.setState(new EmptyState());
+		
+		LocationStateFactory factory=new LocationStateFactory();
+		
+		if (currentLoc.isAdjacent(targetLoc)) {
+			if (targetLoc.getState().showState().equalsIgnoreCase("empty")
+					|| targetLoc.getState().showState()
+							.equalsIgnoreCase("Mapbase"))
+
+				this.currentLoc.reverseToLastState();
 			this.setCurrntloc(targetLoc);
-			this.currentLoc.setState(new TRoverState());
+			this.currentLoc.setState(factory.factory(new TRoverState()));
 		}
 
 		else
@@ -92,10 +99,6 @@ public class TRover implements TInhabitant {
 		return this.currentLoc;
 	}
 
-	void setLocation(Location targetLoc) {
-		this.currentLoc = targetLoc;
-	}
-
 	@Override
 	public String getId() {
 		// TODO Auto-generated method stub
@@ -104,6 +107,12 @@ public class TRover implements TInhabitant {
 
 	public void setId(String id) {
 		this.ID = id;
+	}
+
+	@Override
+	public void setCurrentLocation(Location loc) {
+		// TODO Auto-generated method stub
+		this.currentLoc = loc;
 	}
 
 }

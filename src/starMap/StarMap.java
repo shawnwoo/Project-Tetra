@@ -4,7 +4,7 @@ import java.util.Date;
 
 import roles.THero;
 
-public class StarMap implements StarMapInterface {
+public class StarMap implements StarMapInterface,Cloneable {
 
 	private Header header = new Header();
 	private String directions;
@@ -14,7 +14,10 @@ public class StarMap implements StarMapInterface {
 	@Override
 	public StarSignal showSignal(String MapId) {
 		// TODO Auto-generated method stub
-		return null;
+		if (header.getID().equals(MapId))
+			return new StarSignal();
+		else
+			return null;
 
 	}
 
@@ -110,6 +113,22 @@ public class StarMap implements StarMapInterface {
 	public StarMapInterface getNode() {
 		// TODO Auto-generated method stub
 		return this;
+	}
+
+	@Override
+	public boolean isEncrypted(THero hero) {
+		// TODO Auto-generated method stub
+
+		if (isEncrypted && header.getTHero() == hero)
+			return true;
+		else
+			return false;
+	}
+
+	@Override
+	public StarMapInterface cloneMap() throws CloneNotSupportedException {
+		// TODO Auto-generated method stub
+		return (StarMapInterface) this.clone();
 	}
 
 }

@@ -28,6 +28,10 @@ public abstract class Location {
 		this.state = state;
 	}
 
+	public void reverseToLastState() {
+		this.state = this.preState;
+	}
+
 	abstract public boolean isAdjacent(Location target);
 
 	public String showState() {
@@ -72,6 +76,7 @@ public abstract class Location {
 	public void setBase(Base base) {
 		state = base.setBaseState();
 		this.base = base;
+		
 
 	}
 

@@ -8,5 +8,10 @@ public interface StarMapInterface {
 	void encrypt(THero hero);
 	void decrypt(THero hero);
 	StarMapInterface getNode();
+	boolean isEncrypted();
+	boolean isEncrypted(THero hero);
+	Header getHeader();
+	StarMapInterface cloneMap() throws CloneNotSupportedException;
+	
 
 }

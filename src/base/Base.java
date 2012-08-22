@@ -1,6 +1,7 @@
 package base;
 
 import starMap.StarMapInterface;
+import surface.Location;
 import surface.LocationState;
 
 public interface Base {
@@ -9,5 +10,6 @@ public interface Base {
 	String getBaseType();
 	LocationState setBaseState();
 	void setEmpty();
+	void setMap(StarMapInterface map);
 
 }

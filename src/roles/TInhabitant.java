@@ -14,5 +14,6 @@ public interface TInhabitant {
  public void setInitLocation(Location loc);
  public Location getCurrentLocation();
  public String getId();
+ public void setCurrentLocation(Location loc);
  
 }
