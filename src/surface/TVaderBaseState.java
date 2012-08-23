@@ -5,7 +5,13 @@ public class TVaderBaseState implements LocationState {
 	@Override
 	public String showState() {
 		// TODO Auto-generated method stub
-		return "Vader";
+		return "TVaderBaseState";
+	}
+
+	@Override
+	public int getStateNum() {
+		// TODO Auto-generated method stub
+		return 7;
 	}
 
 }

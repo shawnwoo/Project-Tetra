@@ -2,6 +2,8 @@ package surface;
 
 public class RectangleLocation extends Location {
 
+
+
 	public RectangleLocation(int x, int y) {
 		super(x, y);
 		// TODO Auto-generated constructor stub

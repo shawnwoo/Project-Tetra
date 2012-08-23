@@ -8,4 +8,10 @@ public class RiverState implements LocationState {
 		return "River";
 	}
 
+	@Override
+	public int getStateNum() {
+		// TODO Auto-generated method stub
+		return 1;
+	}
+
 }

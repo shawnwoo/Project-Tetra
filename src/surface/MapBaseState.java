@@ -8,4 +8,10 @@ public class MapBaseState implements LocationState {
 		return "MapBase";
 	}
 
+	@Override
+	public int getStateNum() {
+		// TODO Auto-generated method stub
+		return 2;
+	}
+
 }
