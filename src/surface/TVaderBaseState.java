@@ -11,7 +11,7 @@ public class TVaderBaseState implements LocationState {
 	@Override
 	public int getStateNum() {
 		// TODO Auto-generated method stub
-		return 7;
+		return 3;
 	}
 
 }

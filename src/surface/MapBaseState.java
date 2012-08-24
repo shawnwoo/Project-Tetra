@@ -11,7 +11,7 @@ public class MapBaseState implements LocationState {
 	@Override
 	public int getStateNum() {
 		// TODO Auto-generated method stub
-		return 2;
+		return 7;
 	}
 
 }

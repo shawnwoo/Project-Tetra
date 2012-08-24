@@ -12,7 +12,7 @@ public class mainTest extends JFrame {
 		
 		setTitle("Project Tetra");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setSize(300, 182);
+		setSize(800, 600);
 		setLocationRelativeTo(null);
 	
 		setVisible(true);

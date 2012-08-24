@@ -11,7 +11,7 @@ public class THeroBaseState implements LocationState {
 	@Override
 	public int getStateNum() {
 		// TODO Auto-generated method stub
-		return 6;
+		return 2;
 	}
 
 }
