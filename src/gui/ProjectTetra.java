@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import java.util.Random;
 
@@ -21,13 +22,13 @@ import roles.*;
 import starMap.*;
 import surface.*;
 
-public class ProjectTetra extends JPanel implements ActionListener {
+public class ProjectTetra extends JPanel implements MouseListener {
 
 	private final int NUM_IMAGES = 8;
 	private final int CELL_SIZE = 30;
 
-	private final int rows = 25;
-	private final int cols = 50;
+	private final int rows = 20;
+	private final int cols = 30;
 
 	private final int EMPTY = 0;
 	private final int RIVER = 1;
@@ -52,7 +53,8 @@ public class ProjectTetra extends JPanel implements ActionListener {
 
 	private final int[] MAPBASE_LOC = { 10, 15 };
 	private final int[] HEROBASE_LOC = { 0, 2 };
-	private final int[] VADERBASE_LOC = { 9, 9 };
+	private final int[] VADERBASE_LOC = { VaderBase.X_VADER_BASE,
+			VaderBase.Y_VADER_BASE };
 
 	private StarMapInterface starMap1;
 	private StarMapInterface starMap2;
@@ -65,7 +67,7 @@ public class ProjectTetra extends JPanel implements ActionListener {
 	private TVader vader1;
 	private final int[] ROVER1_LOC = { 1, 4 };
 	private final int[] ROVER2_LOC = { 3, 6 };
-	private final int[] HERO_LOC = {};
+	private final int[] VADER_LOC = { 12, 12 };
 
 	public ProjectTetra() {
 
@@ -82,10 +84,9 @@ public class ProjectTetra extends JPanel implements ActionListener {
 		// setDoubleBuffered(true);
 
 		initGame();
-
-		newGame();
-		timer = new Timer(2500, this);
-		timer.start();
+		
+		addMouseListener(this);
+		
 
 	}
 
@@ -110,86 +111,211 @@ public class ProjectTetra extends JPanel implements ActionListener {
 		starAtlas.add(starMap3);
 
 		mapBase = new MapBase(starAtlas);
-		Location mapBaseloc = new RectangleLocation(MAPBASE_LOC[0],
-				MAPBASE_LOC[1]);
+
+		int x = MAPBASE_LOC[0];
+		int y = MAPBASE_LOC[1];
+		Location mapBaseloc = loc[x][y];
 		mapBaseloc.setBase(mapBase);
 		mapBaseloc.setState(factory.factory(new MapBaseState()));
-		loc[MAPBASE_LOC[0]][MAPBASE_LOC[1]] = mapBaseloc;
 
-		System.out.println("Step1: Add bases!");
+		System.out.println("Add Map base!");
 
 	}
 
 	private void addRover() {
 		TRoverFactory roverFactory = new TRoverFactory();
-		rover1 = (TRover) roverFactory.maleFactory();
-		rover2 = (TRover) roverFactory.femaleFactory();
+		rover1 = roverFactory.maleFactory();
+		rover2 = roverFactory.femaleFactory();
 
-		Location rover1Loc = new RectangleLocation(ROVER1_LOC[0], ROVER1_LOC[1]);
-		Location rover2Loc = new RectangleLocation(ROVER2_LOC[0], ROVER2_LOC[1]);
+		int x1 = ROVER1_LOC[0];
+		int y1 = ROVER1_LOC[1];
+		Location rover1Loc = loc[x1][y1];
 
+		int x2 = ROVER2_LOC[0];
+		int y2 = ROVER2_LOC[1];
+
+		Location rover2Loc = loc[x2][y2];
 		rover1.setInitLocation(rover1Loc);
 		rover2.setInitLocation(rover2Loc);
 		rover1Loc.setState(factory.factory(new TRoverState()));
 		rover2Loc.setState(factory.factory(new TRoverState()));
 
-		loc[ROVER1_LOC[0]][ROVER1_LOC[1]] = rover1Loc;
-		loc[ROVER2_LOC[0]][ROVER2_LOC[1]] = rover2Loc;
-
-		System.out.println("Step2: Add Rovers!");
+		System.out.println(" Add Rovers!");
 
 	}
 
 	private void addHeroBase() {
 		heroBase = new HeroBase();
-		Location heroBaseloc = new RectangleLocation(HEROBASE_LOC[0],
-				HEROBASE_LOC[1]);
+		int x = HEROBASE_LOC[0];
+		int y = HEROBASE_LOC[1];
+
+		Location heroBaseloc = loc[x][y];
 
 		heroBaseloc.setBase(heroBase);
 		heroBaseloc.setState(factory.factory(new THeroBaseState()));
 
-		loc[HEROBASE_LOC[0]][HEROBASE_LOC[1]] = heroBaseloc;
-
-		System.out.println("Step3: Add Hero Base!");
+		System.out.println("Add Hero Base!");
 	}
 
 	private void addVaderBase() {
 		vaderBase = new VaderBase();
-		int x=VADERBASE_LOC[0];
-		int y=VADERBASE_LOC[1];
-		Location vaderBaseloc = new RectangleLocation(x,y);
+		int x = VADERBASE_LOC[0];
+		int y = VADERBASE_LOC[1];
+		Location vaderBaseloc = loc[x][y];
+		VaderBase.loc=loc[x][y];
 
 		vaderBaseloc.setBase(vaderBase);
 		vaderBaseloc.setState(factory.factory(new TVaderBaseState()));
-		
-		loc[x][y]=vaderBaseloc;
-		
-		System.out.println("Step4: Add VaderBase and Rivers");
-		
-		Location river1=new RectangleLocation(x-1,y);
-		Location river2=new RectangleLocation(x+1,y);
-		Location river3=new RectangleLocation(x,y-1);
-		Location river4=new RectangleLocation(x,y+1);
-		
-		river1.setState(factory.factory(new RiverState() ));
+
+		System.out.println("Add VaderBase and Rivers");
+
+		Location river1 = loc[x - 1][y];
+		Location river2 = loc[x + 1][y];
+		Location river3 = loc[x][y + 1];
+		Location river4 = loc[x][y - 1];
+
+		river1.setState(factory.factory(new RiverState()));
 		river2.setState(factory.factory(new RiverState()));
 		river3.setState(factory.factory(new RiverState()));
 		river4.setState(factory.factory(new RiverState()));
-		
-		loc[x-1][y]=river1;
-		loc[x+1][y]=river2;
-		loc[x][y-1]=river3;
-		loc[x][y+1]=river4;
 
 	}
 
 	private void addHero() {
+		THeroFactory heroFactory = new THeroFactory();
+		hero1 = heroFactory.femaleFactory();
+		int x = HEROBASE_LOC[0];
+		int y = HEROBASE_LOC[1];
+		Location heroLoc = loc[x][y];
+		hero1.setId("Super Woman");
+		hero1.setHeroBase((HeroBase) heroBase);
+		hero1.setCurrentLocation(heroLoc);
+
+		System.out.println("Add a Female Hero");
 
 	}
 
-	private void newGame() {
+	private void addVader() {
+		TVaderfactory vaderFactory = new TVaderfactory();
+
+		vader1 = vaderFactory.maleFactory();
+		int x = VADER_LOC[0];
+		int y = VADER_LOC[1];
+		Location vaderLoc = loc[x][y];
+		vader1.setCurrentLocation(vaderLoc);
+
+		System.out.println("Add a male Vader");
 
 	}
+
+	private void moveHero() {
+
+		int targetX = hero1.getCurrentLocation().getAxisX() + 1;
+		int targetY = hero1.getCurrentLocation().getAxisY();
+		hero1.moveTo(loc[targetX][targetY]);
+
+		System.out.println("Hero, MOVE!");
+	}
+
+	private void moveRover() {
+
+		int targetX = rover1.getCurrentLocation().getAxisX() + 1;
+		int targetY = rover1.getCurrentLocation().getAxisY();
+
+		rover1.moveTo(loc[targetX][targetY]);
+		rover2.moveTo(loc[targetX][targetY]);
+
+		System.out.println("Rovers, Move!");
+
+	}
+
+	private void moveVader() {
+		int targetX = vader1.getCurrentLocation().getAxisX();
+		int targetY = vader1.getCurrentLocation().getAxisY() - 1;
+
+		vader1.moveTo(loc[targetX][targetY]);
+
+		System.out.println("Vaders, Move 1 step down!");
+
+	}
+	
+	private void flyHero(){
+		int targetX=hero1.getCurrentLocation().getAxisX()+5;
+		int targetY=hero1.getCurrentLocation().getAxisY()+7;
+		
+		hero1.flyTo(loc[targetX][targetY]);
+		
+		System.out.println("Hero, Fly!");
+		
+	}
+	
+	private void flyVader(){
+		int targetX=VADERBASE_LOC[0];
+		int targetY=VADERBASE_LOC[1];
+		
+		vader1.flyTo(loc[targetX][targetY]);
+		
+		System.out.println("Vader, Fly back to Vader base!");
+	}
+	
+	private void vaderFlyOut(){
+		int targetX=vader1.getCurrentLocation().getAxisX()+1;
+		int targetY1=vader1.getCurrentLocation().getAxisY();
+		int targetY2=vader1.getCurrentLocation().getAxisY()+5;
+		
+		
+		vader1.moveTo(loc[targetX][targetY1]);
+		
+		vader1.flyTo(loc[targetX][targetY2]);
+		
+		System.out.println("Vader, Fly out from Vader base!");
+	}
+	
+	private void vaderTryToMoveToHeroLoc(){
+		int targetX=hero1.getCurrentLocation().getAxisX();
+		int targetY=hero1.getCurrentLocation().getAxisY();
+		vader1.moveTo(loc[targetX][targetY]);
+		
+		System.out.println("Vader, move to a cell already has someone");
+	}
+	
+	
+	private void vaderGotoMapBase(){
+	    int targetX=MAPBASE_LOC[0];
+	    int targetY=MAPBASE_LOC[1];
+	    int startX=vader1.getCurrentLocation().getAxisX();
+	    int startY=vader1.getCurrentLocation().getAxisY();
+	    
+	    for(int i=startX+1;i<=targetX;i++){
+	    	vader1.moveTo(loc[i][startY]);
+	    };
+	    
+	    for (int i=startY+1;i<=targetY-1;i++){
+	    	vader1.moveTo(loc[targetX][i]);
+	    }
+	    
+	    
+	    System.out.println("Vader, move to MapBase step by step!");
+	    
+	    
+	}
+	
+	private void vaderEnterMapBase(){
+		int targetX=MAPBASE_LOC[0];
+		int targetY=MAPBASE_LOC[1];
+		
+		System.out.println("Vader, enter the mapbase!");
+		
+		vader1.moveTo(loc[targetX][targetY]);
+	}
+	
+	private void vaderRetrace(){
+		vader1.retrace();
+		
+		System.out.println("Vader, retrace back!");
+	}
+	
+	
 
 	public void paint(Graphics g) {
 		int cell = 0;
@@ -203,19 +329,100 @@ public class ProjectTetra extends JPanel implements ActionListener {
 
 	}
 
+	
+
+	private void printStep(int StepNum) {
+		System.out.println("********" + "Step " + StepNum + " ********");
+	}
+
 	@Override
-	public void actionPerformed(ActionEvent e) {
+	public void mouseClicked(MouseEvent e) {
 		step += 1;
-		if (step == 1)
+
+		printStep(step);
+
+		switch (step) {
+		case 1:
 			addBase();
-		if (step == 2)
+			break;
+		case 2:
 			addRover();
-		if (step == 3)
+			break;
+		case 3:
 			addHeroBase();
-		if(step==4)
+			break;
+		case 4:
 			addVaderBase();
+			break;
+		case 5:
+			addHero();
+			break;
+		case 6:
+			addVader();
+			break;
+		case 7:
+			moveHero();
+			break;
+		case 8:
+			moveRover();
+			break;
+		case 9:
+			moveVader();
+			break;
+		case 10:
+			flyHero();
+			break;
+		case 11:
+			flyVader();
+			break;
+		case 12:
+			vaderFlyOut();
+			break;
+		case 13: 
+			vaderTryToMoveToHeroLoc();
+			break;
+		case 14: 
+			vaderGotoMapBase();
+			break;
+		case 15:
+			vaderEnterMapBase();
+			break;
+		case 16:
+			vaderRetrace();
+			break;
+		default: {
+			System.out.println("No more actions!");
+			//timer.stop();
+		}
+			break;
+
+		}
 
 		repaint();
+		
+	}
 
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 }

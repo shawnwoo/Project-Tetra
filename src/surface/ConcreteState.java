@@ -20,4 +20,10 @@ public class ConcreteState implements LocationState {
 		return this.intrinsicState.getStateNum();
 	}
 
+	@Override
+	public boolean isSurFaceState() {
+		// TODO Auto-generated method stub
+		return this.intrinsicState.isSurFaceState();
+	}
+
 }

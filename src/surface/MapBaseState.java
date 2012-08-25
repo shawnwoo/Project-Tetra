@@ -14,4 +14,10 @@ public class MapBaseState implements LocationState {
 		return 7;
 	}
 
+	@Override
+	public boolean isSurFaceState() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
 }

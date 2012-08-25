@@ -2,6 +2,8 @@ package roles;
 
 import starMap.StarMapInterface;
 import surface.Location;
+import surface.LocationStateFactory;
+import surface.THeroState;
 import starMap.*;
 import base.Base;
 import base.HeroBase;
@@ -9,13 +11,15 @@ import base.VaderBase;
 
 public class THero implements TInhabitant {
 
-	private TInhabitant rover;
+	private TRover rover;
 	private EncryptStrategy encryptStragety;
 	private HeroBase heroBase;
 	private Location heroBaseLocation;
+	private LocationStateFactory factory = new LocationStateFactory();
 
 	public void setHeroBase(HeroBase base) {
 		this.heroBase = base;
+		base.setID(rover.getId());
 	}
 
 	public HeroBase getHeroBase() {
@@ -30,7 +34,7 @@ public class THero implements TInhabitant {
 		return this.heroBaseLocation;
 	}
 
-	public THero(TInhabitant rover) {
+	public THero(TRover rover) {
 		this.rover = rover;
 
 	}
@@ -87,10 +91,10 @@ public class THero implements TInhabitant {
 
 				}
 			}
-		}
+		} else
+			rover.moveTo(targetLoc);
 
-		// rover.moveTo(targetLoc);
-
+		rover.getCurrentLocation().setState(factory.factory(new THeroState()));
 	}
 
 	@Override
@@ -148,8 +152,16 @@ public class THero implements TInhabitant {
 		return rover.getId();
 	}
 
+	public void setId(String id) {
+		rover.setId(id);
+
+	}
+
 	public void flyTo(Location targetLoc) {
+
+		rover.getCurrentLocation().reverseToLastState();
 		rover.setCurrentLocation(targetLoc);
+		rover.getCurrentLocation().setState(factory.factory(new THeroState()));
 	}
 
 	private void enterHeroBase(Location loc) {
@@ -162,5 +174,6 @@ public class THero implements TInhabitant {
 	public void setCurrentLocation(Location loc) {
 		// TODO Auto-generated method stub
 		rover.setCurrentLocation(loc);
+		loc.setState(factory.factory(new THeroState()));
 	}
 }

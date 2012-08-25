@@ -14,4 +14,10 @@ public class TVaderState implements LocationState {
 		return 6;
 	}
 
+	@Override
+	public boolean isSurFaceState() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

@@ -14,4 +14,10 @@ public class THeroState implements LocationState{
 		return 5;
 	}
 
+	@Override
+	public boolean isSurFaceState() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

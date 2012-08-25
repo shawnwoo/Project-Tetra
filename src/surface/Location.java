@@ -24,7 +24,11 @@ public abstract class Location {
 	 *            the state to set
 	 */
 	public void setState(LocationState state) {
-		this.preState = this.state;
+		if (preState == null )
+			preState = state;
+		else if(state.isSurFaceState())
+
+			this.preState = this.state;
 		this.state = state;
 	}
 
@@ -40,24 +44,25 @@ public abstract class Location {
 
 	public abstract String getImg();
 
-	/**
-	 * @return the role
-	 */
-	public TInhabitant getRole() {
-		return role;
-	}
+	// /**
+	// * @return the role
+	// */
+	// public TInhabitant getRole() {
+	// return role;
+	// }
 
-	/**
-	 * @param role
-	 *            the role to set
-	 */
-	public void setRole(TInhabitant role) {
-		this.role = role;
-	}
+	// /**
+	// * @param role
+	// * the role to set
+	// */
+	// // public void setRole(TInhabitant role) {
+	// // this.role = role;
+	// // }
 
 	public Location(int x, int y) {
 		this.x = x;
 		this.y = y;
+
 	}
 
 	public int getAxisX() {
@@ -76,7 +81,6 @@ public abstract class Location {
 	public void setBase(Base base) {
 		state = base.setBaseState();
 		this.base = base;
-		
 
 	}
 

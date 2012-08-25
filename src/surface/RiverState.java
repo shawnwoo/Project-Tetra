@@ -14,4 +14,10 @@ public class RiverState implements LocationState {
 		return 1;
 	}
 
+	@Override
+	public boolean isSurFaceState() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
 }

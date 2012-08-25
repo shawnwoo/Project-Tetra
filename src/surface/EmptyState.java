@@ -14,4 +14,10 @@ public class EmptyState implements LocationState {
 		return 0;
 	}
 
+	@Override
+	public boolean isSurFaceState() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
 }

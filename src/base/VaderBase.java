@@ -11,7 +11,7 @@ public class VaderBase implements Base {
 
 	public static  final int X_VADER_BASE = 5;
 	public static final int Y_VADER_BASE = 5;
-	public static final Location loc=new RectangleLocation(X_VADER_BASE, Y_VADER_BASE); 
+	public static Location loc=new RectangleLocation(X_VADER_BASE, Y_VADER_BASE); 
 
 	private boolean isEmpty = false;
 	private StarMapInterface map;

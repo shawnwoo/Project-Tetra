@@ -14,4 +14,10 @@ public class TRoverState implements LocationState{
 		return 4;
 	}
 
+	@Override
+	public boolean isSurFaceState() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

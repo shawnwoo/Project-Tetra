@@ -12,6 +12,7 @@ public class TRover implements TInhabitant {
 	private String gender;
 	private StarMapInterface starMap;
 	private String ID = "0";
+	LocationStateFactory factory = new LocationStateFactory();
 
 	public TRover(String gender) {
 		this.gender = gender;
@@ -29,37 +30,20 @@ public class TRover implements TInhabitant {
 	 * @param targetLoc
 	 */
 	public void moveTo(Location targetLoc) {
-		
-		LocationStateFactory factory=new LocationStateFactory();
-		
+
 		if (currentLoc.isAdjacent(targetLoc)) {
 			if (targetLoc.getState().showState().equalsIgnoreCase("empty")
 					|| targetLoc.getState().showState()
-							.equalsIgnoreCase("Mapbase"))
-
-				this.currentLoc.reverseToLastState();
-			this.setCurrntloc(targetLoc);
-			this.currentLoc.setState(factory.factory(new TRoverState()));
+							.equalsIgnoreCase("Mapbase")) {
+				currentLoc.reverseToLastState();
+				setCurrentLocation(targetLoc);
+				currentLoc.setState(factory.factory(new TRoverState()));
+			}else System.out.println("Something in there, I cannot move to that location.");
 		}
 
 		else
-			System.out.println("Can move to adjacent location");
+			System.out.println("Only can move to adjacent location");
 
-	}
-
-	/**
-	 * @return the currntLoc
-	 */
-	public Location getCurrntloc() {
-		return currentLoc;
-	}
-
-	/**
-	 * @param currntloc
-	 *            the currntLoc to set
-	 */
-	public void setCurrntloc(Location currntloc) {
-		this.currentLoc = currntloc;
 	}
 
 	@Override

@@ -5,5 +5,7 @@ public interface LocationState {
 	String showState();
 	
 	int getStateNum();
+	
+	boolean isSurFaceState();
 
 }
