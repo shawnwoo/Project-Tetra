@@ -12,6 +12,8 @@ public interface StarMapInterface {
 	boolean isEncrypted(THero hero);
 	Header getHeader();
 	StarMapInterface cloneMap() throws CloneNotSupportedException;
+	void setDirections(String string);
+	String getDirections();
 	
 
 }

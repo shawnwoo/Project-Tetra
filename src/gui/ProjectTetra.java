@@ -105,10 +105,18 @@ public class ProjectTetra extends JPanel implements MouseListener {
 		starMap2 = new StarMap();
 		starMap3 = new StarMap();
 		starAtlas = new StarAtlas();
+		
+		starMap1.getHeader().setID("starMap1");
+		starMap2.getHeader().setID("starMap2");
+		starMap3.getHeader().setID("starMap3");
+		starMap1.setDirections("Directions to Planet Earth from Tetra");
+		starMap2.setDirections("Directions to Planet Mars from Tetra");
+		starMap3.setDirections("Directions to Planet Mercury from Tetra");
 
 		starAtlas.add(starMap1);
 		starAtlas.add(starMap2);
 		starAtlas.add(starMap3);
+		starAtlas.getHeader().setID("starAtlas");
 
 		mapBase = new MapBase(starAtlas);
 
@@ -190,6 +198,9 @@ public class ProjectTetra extends JPanel implements MouseListener {
 		hero1.setId("Super Woman");
 		hero1.setHeroBase((HeroBase) heroBase);
 		hero1.setCurrentLocation(heroLoc);
+		hero1.setVaderBase(vaderBase);
+		hero1.setEncryptStragety(new ReverseEncrypt());
+		hero1.setHeroBaseLocation(heroLoc);
 
 		System.out.println("Add a Female Hero");
 
@@ -315,6 +326,54 @@ public class ProjectTetra extends JPanel implements MouseListener {
 		System.out.println("Vader, retrace back!");
 	}
 	
+	private void vaderFlyToAnotherPlace(){
+		int targetX=vader1.getCurrentLocation().getAxisX()+5;
+		int targetY=vader1.getCurrentLocation().getAxisY()+8;
+		
+		vader1.flyTo(loc[targetX][targetY]);
+		
+		System.out.println("Vader said: I am gone!");
+		
+		
+	}
+	
+	private void heroGotoMapBase(){
+		int targetX=MAPBASE_LOC[0];
+		int targetY=MAPBASE_LOC[1];
+		int startX=hero1.getCurrentLocation().getAxisX();
+		int startY=hero1.getCurrentLocation().getAxisY();
+		
+		for(int i=startX+1;i<=targetX;i++){
+			hero1.moveTo(loc[i][startY]);
+			
+		}
+		
+		for(int j=startY+1;j<=targetY-1;j++){
+			hero1.moveTo(loc[targetX][j]);
+		}
+		
+		System.out.println("Hero, move to MapBase step by step!");
+	}
+	
+	private void heroEnterMapBase(){
+		int targetX=MAPBASE_LOC[0];
+		int targetY=MAPBASE_LOC[1];
+		
+		hero1.moveTo(loc[targetX][targetY]);
+		
+		System.out.println("Hero, enter the MapBase!");
+	}
+	
+	private void displayClonedMap(){
+		
+		System.out.println("Displays clone Map!");
+		heroBase.getStarMap().display();
+	}
+	
+	private void displayOriginalMap(){
+		System.out.println("Display orginal Map in MapBase! ");
+		mapBase.getStarMap().display();
+	}
 	
 
 	public void paint(Graphics g) {
@@ -389,6 +448,21 @@ public class ProjectTetra extends JPanel implements MouseListener {
 			break;
 		case 16:
 			vaderRetrace();
+			break;
+		case 17:
+			vaderFlyToAnotherPlace();;
+			break;
+		case 18:
+			heroGotoMapBase();
+			break;
+		case 19:
+			heroEnterMapBase();
+			break;
+		case 20:
+			displayClonedMap();
+			break;
+		case 21:
+			displayOriginalMap();
 			break;
 		default: {
 			System.out.println("No more actions!");

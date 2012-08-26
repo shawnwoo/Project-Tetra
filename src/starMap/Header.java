@@ -108,4 +108,17 @@ public class Header {
 		this.ID = appendID;
 	}
 
+	public Header cloneHeader() {
+		// TODO Auto-generated method stub
+		Header newHeader= new Header();
+		newHeader.setDateOfEncrypt(this.dateOfEncrypt);
+		newHeader.setID(this.ID);
+		newHeader.setLocation(this.Location);
+		newHeader.setNumerOfItems(this.numerOfItems);
+		newHeader.setRestorationCounter(this.restorationCounter);
+		newHeader.setTHero(this.THero);
+		
+		return newHeader;
+	}
+
 }

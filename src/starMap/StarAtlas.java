@@ -14,7 +14,7 @@ public class StarAtlas implements StarMapInterface,Cloneable {
 	@Override
 	public StarSignal showSignal(String MapId) {
 		// TODO Auto-generated method stub
-		return null;
+		return new StarSignal();
 	}
 
 	@Override
@@ -103,7 +103,30 @@ public class StarAtlas implements StarMapInterface,Cloneable {
 	@Override
 	public StarMapInterface cloneMap() throws CloneNotSupportedException {
 		// TODO Auto-generated method stub
-		return (StarMapInterface) this.clone();
+		
+		StarAtlas newAtlas=new StarAtlas();
+		
+		Enumeration enu=nodes();
+		while(enu.hasMoreElements()){
+		
+			newAtlas.add(((StarMapInterface) enu.nextElement()).cloneMap());
+		}
+		
+		
+		
+		return newAtlas;
+	}
+
+	@Override
+	public void setDirections(String string) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public String getDirections() {
+		// TODO Auto-generated method stub
+		return "Star Atlas";
 	}
 
 }

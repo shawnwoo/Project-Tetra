@@ -10,9 +10,11 @@ public class MapBase implements Base {
 
 	private StarMapInterface map;
 	private boolean isEmpty = false;
+	private String mapID;
 
 	public MapBase(StarMapInterface map) {
 		this.map = map;
+		this.mapID=map.getHeader().getID();
 	}
 
 	@Override

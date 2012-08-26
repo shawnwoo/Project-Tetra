@@ -10,6 +10,7 @@ public class StarMap implements StarMapInterface,Cloneable {
 	private String directions;
 	private String map;
 	private boolean isEncrypted = false;
+ 
 
 	@Override
 	public StarSignal showSignal(String MapId) {
@@ -20,6 +21,8 @@ public class StarMap implements StarMapInterface,Cloneable {
 			return null;
 
 	}
+	
+	
 
 	/**
 	 * @return the header
@@ -72,8 +75,8 @@ public class StarMap implements StarMapInterface,Cloneable {
 		if (this.isEncrypted()) {
 			System.out.println("This map is encryped");
 		} else {
-			System.out.println("ID: " + header.getTHero().getId());
-			System.out.println("Date: " + header.getDateOfEncrypt().toString());
+			System.out.println("ID: " + header.getID());
+			System.out.println("Date: " + "April 2012(Tetra Time)");
 			System.out.println("Text: " + this.getDirections());
 		}
 	}
@@ -128,7 +131,11 @@ public class StarMap implements StarMapInterface,Cloneable {
 	@Override
 	public StarMapInterface cloneMap() throws CloneNotSupportedException {
 		// TODO Auto-generated method stub
-		return (StarMapInterface) this.clone();
+		StarMap newmap=new StarMap();
+		newmap.setDirections(this.directions);
+		newmap.setHeader(header.cloneHeader());
+		newmap.setMap(this.map);
+		return newmap;
 	}
 
 }

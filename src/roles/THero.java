@@ -14,6 +14,7 @@ public class THero implements TInhabitant {
 	private TRover rover;
 	private EncryptStrategy encryptStragety;
 	private HeroBase heroBase;
+    private VaderBase vaderBase;
 	private Location heroBaseLocation;
 	private LocationStateFactory factory = new LocationStateFactory();
 
@@ -41,6 +42,7 @@ public class THero implements TInhabitant {
 
 	@Override
 	public void moveTo(Location targetLoc) {
+		String mapID;
 
 		if (targetLoc.getState().showState().equalsIgnoreCase("THero")) {
 			enterHeroBase(targetLoc);
@@ -53,7 +55,7 @@ public class THero implements TInhabitant {
 
 			Base base = targetLoc.getBase();
 			StarMapInterface map;
-
+			mapID = base.getStarMap().getHeader().getID();
 			if (!base.isEmpty()) {
 				map = base.getStarMap();
 				if (!map.isEncrypted()) {
@@ -71,17 +73,25 @@ public class THero implements TInhabitant {
 				;
 
 			} else {
-				flyTo(VaderBase.loc);
-				Base vaderbase = VaderBase.loc.getBase();
+				
+				System.out.println("Hero: The map: "+ mapID+ " is rubbed by Vader, I will get it back!");
+
+				flyTo(vaderBase.loc);
+				Base vaderbase = vaderBase.loc.getBase();
 				StarMapInterface rubbedMap = vaderbase.getStarMap();
 				String MapId = vaderbase.getStarMap().getHeader().getID();
-				if (vaderbase.getStarMap().showSignal(MapId).isHere()) {
+				if (vaderbase.getStarMap().showSignal(mapID).isHere()) {
 					try {
 						StarMapInterface heroMap = rubbedMap.cloneMap();
+						System.out.println("Original Map cloned!");
 						rubbedMap.encrypt(this);
+						System.out.println("Original Map Encrypted!");
 						base.setMap(rubbedMap);
+						vaderbase.setMap(null);
+						System.out.println("Retrun the original Map back to the mapbase!");
 						flyTo(this.heroBaseLocation);
 						this.heroBase.setMap(heroMap);
+						System.out.println("Bring the Map back to the hero base!");
 
 					} catch (CloneNotSupportedException e) {
 						// TODO Auto-generated catch block
@@ -175,5 +185,19 @@ public class THero implements TInhabitant {
 		// TODO Auto-generated method stub
 		rover.setCurrentLocation(loc);
 		loc.setState(factory.factory(new THeroState()));
+	}
+
+	/**
+	 * @return the vaderBase
+	 */
+	public VaderBase getVaderBase() {
+		return vaderBase;
+	}
+
+	/**
+	 * @param vaderBase2 the vaderBase to set
+	 */
+	public void setVaderBase(Base vaderBase2) {
+		this.vaderBase = (VaderBase) vaderBase2;
 	}
 }
